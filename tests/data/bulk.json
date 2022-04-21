@@ -1,0 +1,43 @@
+{
+  "parameters": {
+    "output": "tests/data/bulk.json",
+    "folder": "tests/data"
+  },
+  "jobs": [
+    {
+      "target": "project.dataset.example1",
+      "sql": "example1.sql",
+      "sources": [
+        "`project.dataset.raw1`",
+        "`project.dataset.profile`",
+        "`project.dataset.raw2`"
+      ]
+    },
+    {
+      "target": "project.dataset.example2",
+      "sql": "example2.sql",
+      "sources": [
+        "`project.dataset.raw3`",
+        "`project.dataset.raw4`"
+      ]
+    },
+    {
+      "target": "project.dataset.example3",
+      "sql": "example3.sql",
+      "sources": [
+        "`project.dataset.raw5`",
+        "`project.dataset.raw6`",
+        "`project.dataset.raw7`",
+        "`project.dataset.raw8`"
+      ]
+    },
+    {
+      "target": "project.dataset.example4",
+      "sql": "example4.sql",
+      "sources": [
+        "`project.dataset.example2`",
+        "`project.dataset.example3`"
+      ]
+    }
+  ]
+}

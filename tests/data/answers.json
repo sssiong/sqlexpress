@@ -1,0 +1,109 @@
+{
+  "example1.sql": {
+    "clauses": [
+      "WithClause",
+      "CteStartClause",
+      "SelectClause",
+      "FromClause",
+      "JoinClause",
+      "OnClause",
+      "WhereClause",
+      "CteEndClause",
+      "CteStartClause",
+      "SelectClause",
+      "FromClause",
+      "JoinClause",
+      "OnClause",
+      "WhereClause",
+      "CteEndClause",
+      "SelectClause",
+      "FromClause",
+      "UnionClause",
+      "SelectClause",
+      "FromClause"
+    ],
+    "basics": [
+      "CteBasicQuery",
+      "CteBasicQuery",
+      "BasicQuery"
+    ],
+    "sources": [
+      "`project.dataset.raw1`",
+      "`project.dataset.profile`",
+      "`project.dataset.raw2`"
+    ]
+  },
+  "example2.sql": {
+    "clauses": [
+      "SelectClause",
+      "FromClause",
+      "LeftJoinClause",
+      "OnClause",
+      "WhereClause",
+      "OrderByClause"
+    ],
+    "basics": [
+      "BasicQuery"
+    ],
+    "sources": [
+      "`project.dataset.raw3`",
+      "`project.dataset.raw4`"
+    ]
+  },
+  "example3.sql": {
+    "clauses": [
+      "SelectClause",
+      "FromClause",
+      "JoinClause",
+      "SubqueryStartClause",
+      "SelectClause",
+      "FromClause",
+      "SubqueryEndClause",
+      "UnionClause",
+      "SelectClause",
+      "FromClause",
+      "WhereClause",
+      "SubqueryStartClause",
+      "SelectClause",
+      "FromClause",
+      "SubqueryEndClause"
+    ],
+    "basics": [
+      "BasicQuery"
+    ],
+    "sources": [
+      "`project.dataset.raw5`",
+      "`project.dataset.raw6`",
+      "`project.dataset.raw7`",
+      "`project.dataset.raw8`"
+    ]
+  },
+  "example4.sql": {
+    "clauses": [
+      "WithClause",
+      "CteStartClause",
+      "SelectClause",
+      "FromClause",
+      "WhereClause",
+      "CteEndClause",
+      "CteStartClause",
+      "SelectClause",
+      "FromClause",
+      "WhereClause",
+      "CteEndClause",
+      "SelectClause",
+      "FromClause",
+      "JoinClause",
+      "OnClause"
+    ],
+    "basics": [
+      "CteBasicQuery",
+      "CteBasicQuery",
+      "BasicQuery"
+    ],
+    "sources": [
+      "`project.dataset.example2`",
+      "`project.dataset.example3`"
+    ]
+  }
+}

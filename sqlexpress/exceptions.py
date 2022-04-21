@@ -1,0 +1,3 @@
+
+class ExtractionFailed(Exception):
+    pass
