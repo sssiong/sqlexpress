@@ -1,4 +1,7 @@
 .pytest_cache/
 .idea/
 
-/venv
+*.egg-info/
+
+dist/
+venv/
