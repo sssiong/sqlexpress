@@ -35,6 +35,7 @@ CLAUSE_LIST = [
 class QueryParser:
     raw: str
     target: str = None
+    env: dict = None
 
     processed: str = field(init=False)
     clauses: List[cl.Clause] = field(init=False)
@@ -49,6 +50,9 @@ class QueryParser:
 
     def preprocess(self) -> None:
         processed = self.raw
+        if self.env:
+            for key, value in self.env.items():
+                processed = processed.replace(f'{{{key}}}', value)
         processed = hp.remove_comments(processed)
         replace = [
             (r'\(', ' ( '),  # add blanks before & after open bracket

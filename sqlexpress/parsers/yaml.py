@@ -13,11 +13,14 @@ from . import QueryParser
 class Params:
     output: str
     folder: str = None
+    env: dict = None
 
     def to_dict(self) -> dict:
         output = {'output': self.output}
         if self.folder:
             output['folder'] = self.folder
+        if self.env:
+            output['env'] = self.env
         return output
 
 
@@ -25,17 +28,22 @@ class Params:
 class Job:
     target: str
     sql: str
+    env: dict = None
     parser: QueryParser = None
 
-    def parse(self, folder: str) -> None:
+    def parse(self, folder: str, env: dict = None) -> None:
         fullpath = os.path.join(folder, self.sql) if folder else self.sql
         _, ext = os.path.splitext(fullpath)
         assert ext == '.sql', f'Not a SQL file: {self.sql}'
         query = open(fullpath, 'r').read()
-        self.parser = QueryParser(query)
+        combined_env = {**self.env, **env} if self.env and env \
+            else self.env or env
+        self.parser = QueryParser(query, env=combined_env)
 
     def to_dict(self) -> dict:
         output = {'target': self.target, 'sql': self.sql}
+        if self.env:
+            output['env'] = self.env
         if self.parser:
             output['sources'] = self.parser.extract_sources()
         return output
@@ -60,7 +68,7 @@ class YamlParser:
         parsed_jobs = []
         for job in self.jobs:
             logging.debug(job.to_dict())
-            job.parse(self.params.folder)
+            job.parse(folder=self.params.folder, env=self.params.env)
             parsed_jobs.append(job)
         self.jobs = parsed_jobs
 
