@@ -2,29 +2,37 @@
 
 ## Introduction
 
-Too often we find ourselves with tons of SQLs to maintain and with query
-outputs that do not make sense due to issues with upstream dependencies. 
-Wouldn't it be nice if there is a package that helps us identify all 
-upstream dependencies from our SQLs without the need to manually look
-through them?
+How often do you find yourself in the following situation:
+- Having tons of SQL files to maintain
+  - E.g. trust & safety teams with many rules written in SQL
+  - E.g. data engineering teams with many ETL jobs written in SQL
+- No time to read & understand the logic of every single SQL
+  - E.g. each SQL could be up to 1000s of lines long
+  - E.g. logic could be complicated & not well documented
+- Struggle with data quality issues
+  - E.g. output has issue because source tables have issue / missing data
+- Struggle with query optimization
+  - E.g. SQLs may contain repeated logic that can be combined to save cost & money
 
-Given a SQL file, this package is designed to perform the following:
+Wouldn't it be nice if there is a package that can:
+- Summarize the logic of your SQLs
+- Perform data sanity checks on the required source tables
+- Identify repeated logics across your SQLs
 
-1. **Parse Query Structure**
-   1. Identify the start of clauses / keywords
-   2. Helps to organize the query for other functionalities
-2. **Parse Source Tables**
-   1. Identify source tables required
-   2. Helps to identify required tables
-3. *< more to come > ...*
+Given a single SQL file, this package is designed to:
+- Parse query structure
+- Extract source tables
+- *< more to come >*
 
-Bulk processing of multiple SQLs is also possible. Create a yaml file 
-and provide details of the SQL files + save location of parsed output
-([example](tests/data/bulk.yaml)). The parsed output is saved as a json file 
-([example](tests/data/bulk.json)).
+Given multiple SQL files, this package is further designed to:
+- Bulk perform all functionalities listed above
+- Visualise relationship between source & output tables across SQLs
+- *< more to come >*
 
 
 ## Getting Started
+
+### Single SQL File
 
 Using command line:
 
@@ -34,16 +42,12 @@ python3 -m sqlexpress structure -f tests/data/example1.sql
 
 # print source tables
 python3 -m sqlexpress sources -f tests/data/example1.sql
-
-# bulk processing
-python3 -m sqlexpress bulk -f tests/data/bulk.yaml
 ```
 
 Using python:
 
 ```python
 from sqlexpress.parsers import QueryParser
-
 query = open('tests/data/example1.sql', 'r').read()
 parser = QueryParser(query)
 
@@ -54,6 +58,44 @@ parser.print()
 source_tables = parser.extract_sources()  # ['`project.dataset.raw1`', ...]
 ```
 
+### Multiple SQL Files
+
+Firstly, create a yaml file containing details of the SQL files 
+([example](tests/data/bulk2.yaml)).
+
+Using command line:
+
+```bash
+# process yaml file
+python3 -m sqlexpress bulk -f tests/data/bulk1.yaml
+
+# visualize relationships between tables
+export WEBSERVER_FOLDER=tests/data  # folder containing yaml files
+python3 -m sqlexpress webserver     # start web server
+```
+
+Extracted details are stored in a json file 
+([example](tests/data/bulk2.json)).
+
+## Web Server
+
+### Home page
+
+Shows all yaml files inside `WEBSERVER_FOLDER`.
+- Click on `Extract` button to process yaml file.
+- Click on file name to jump to project page.
+
+![home_page](docs/home_page.gif)
+
+### Project page
+
+Shows the following details:
+1. **Input** - Contents of yaml file
+2. **Output** - Contents of json file
+3. **Graph** - Visualisation of source & output tables
+4. **Table**: List all tables extracted from SQLs
+
+![project_page](docs/project_page.gif)
 
 ## Under The Hood
 

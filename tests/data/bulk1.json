@@ -1,0 +1,16 @@
+{
+  "parameters": {
+    "output": "tests/data/bulk1.json"
+  },
+  "jobs": [
+    {
+      "target": "`project.dataset.example1`",
+      "sql": "tests/data/example1.sql",
+      "sources": [
+        "`project.dataset.raw1`",
+        "`project.dataset.profile`",
+        "`project.dataset.raw2`"
+      ]
+    }
+  ]
+}

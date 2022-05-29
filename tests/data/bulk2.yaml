@@ -1,0 +1,15 @@
+# define parameters used across all sql file parsing
+parameters:
+  folder: "tests/data"                 # (optional) folder containing sql files
+  output: "tests/data/bulk2.json"      # (required) json file containing output
+
+# define all sql files to parse + corresponding output table name
+jobs:
+- target: "`project.dataset.example2`" # (required) output table name
+  sql: "example2.sql"                  # (required) sql file to generate output
+
+- target: "`project.dataset.example3`"
+  sql: "example3.sql"
+
+- target: "`project.dataset.example4`"
+  sql: "example4.sql"
