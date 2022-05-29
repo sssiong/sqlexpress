@@ -47,6 +47,10 @@ def main():
             print(table)
         return
 
+    if command == 'webserver':
+        from .web import app
+        app.run(debug=True)
+
     raise Exception(f'Unknown command: {command}')
 
 
