@@ -1,5 +1,7 @@
-.pytest_cache/
+.DS_Store
+
 .idea/
+.pytest_cache/
 
 *.egg-info/
 
