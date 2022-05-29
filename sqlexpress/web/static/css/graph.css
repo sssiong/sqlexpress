@@ -1,0 +1,21 @@
+#graph-svg {
+  height: 900px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.edgePath path {
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+
+.node rect {
+  cursor: pointer;
+  fill: #fff;
+  stroke: #333;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  cursor: pointer;
+}

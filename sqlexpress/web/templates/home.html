@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+  <h1>Projects</h1>
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>File Name</th>
+        <th># SQLs</th>
+        <th># Tables</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% if projects | length == 0 %}
+      <tr>
+        <td colspan="10">No results</td>
+      </tr>
+    {% endif %}
+    {% for project in projects %}
+      <tr>
+        <td><a href="{{ url_for('project_input', filename=project.filename) }}">{{ project.filename }}</a></td>
+        <td>{{ project.n_jobs }}</td>
+        <td>{{ project.n_tables }}</td>
+        <td>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#{{ project.name }}Modal">
+            Extract
+          </button>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  {% for project in projects %}
+    <div class="modal fade" id="{{ project.name }}Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Extract File: {{ project.filename }}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">Are you sure to proceed?</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <form id="process" method="post" action="{{ url_for('project_extract', filename=project.filename) }}">
+              <button type="submit" class="btn btn-primary">Confirm</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock %}
