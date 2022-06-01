@@ -7,7 +7,7 @@ long_description = (PROJECT_DIR / 'README.md').read_text()
 
 setup(
     name='sqlexpress',
-    version='0.2.0',
+    version='0.2.1',
     author='sssiong',
     description='Package to parse SQL scripts for information',
     long_description=long_description,
