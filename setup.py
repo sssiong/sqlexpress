@@ -13,6 +13,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/sssiong/sqlexpress',
+    include_package_data=True,
     install_requires=[
         'Flask==2.1.2',
         'networkx==2.8',
