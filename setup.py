@@ -14,6 +14,7 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/sssiong/sqlexpress',
     install_requires=[
+        'Flask==2.1.2',
         'networkx==2.8',
         'PyYAML==6.0',
     ],
