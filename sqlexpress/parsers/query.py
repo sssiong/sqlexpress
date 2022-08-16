@@ -7,6 +7,7 @@ import networkx as nx
 
 from .. import helpers as hp
 from ..structures import clauses as cl, basics as bs
+from ..exceptions import InvalidStructure
 
 CLAUSE_LIST = [
     cl.SelectClause(),
@@ -105,7 +106,7 @@ class QueryParser:
             self.clauses[-1].add_token(token)
 
     def parse_basics(self) -> None:
-        self.basics: List[bs.BasicQuery] = []
+        self.basics: List[bs.BasicStructure] = []
 
         # loop through clauses
         for i, clause in enumerate(self.clauses):
@@ -122,7 +123,9 @@ class QueryParser:
             if len(self.basics) > 0:
                 self.basics[-1].add_clause(clause)
 
-        assert isinstance(self.basics[-1], bs.BasicQuery)
+        if not isinstance(self.basics[-1], bs.BasicQuery):
+            raise InvalidStructure
+
         self.basics[-1].target = self.target
 
     def parse_table_graph(self) -> None:

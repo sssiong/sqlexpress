@@ -1,14 +1,28 @@
 import uuid
+from abc import ABC, abstractmethod
 from typing import List, Optional
 
 from . import clauses as cl
 from ..graph import entities as en, relationships as rs
 
 
-class BasicQuery:
+class BasicStructure(ABC):
 
     def __init__(self) -> None:
         self.clauses: List[cl.Clause] = []
+
+    def add_clause(self, clause: cl.Clause) -> None:
+        self.clauses.append(clause)
+
+    @abstractmethod
+    def pending_clause(self) -> bool:
+        pass
+
+
+class BasicQuery(BasicStructure):
+
+    def __init__(self) -> None:
+        super().__init__()
         self._target: Optional[str] = None
 
     @property
@@ -18,9 +32,6 @@ class BasicQuery:
     @target.setter
     def target(self, target: str) -> None:
         self._target = target
-
-    def add_clause(self, clause: cl.Clause) -> None:
-        self.clauses.append(clause)
 
     def pending_clause(self) -> bool:
         cls = self.clauses
@@ -43,7 +54,7 @@ class BasicQuery:
         return output
 
 
-class CteBasicQuery(BasicQuery):
+class CteBasicQuery(BasicStructure):
 
     @property
     def target(self) -> Optional[str]:
