@@ -1,7 +1,7 @@
 
-class ExtractionFailed(Exception):
+class YamlParsingFailed(Exception):
     pass
 
 
-class InvalidStructure(Exception):
+class QueryParsingFailed(Exception):
     pass

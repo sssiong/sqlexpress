@@ -7,7 +7,7 @@ import networkx as nx
 
 from .. import helpers as hp
 from ..structures import clauses as cl, basics as bs
-from ..exceptions import InvalidStructure
+from ..exceptions import QueryParsingFailed
 
 CLAUSE_LIST = [
     cl.SelectClause(),
@@ -44,10 +44,13 @@ class QueryParser:
     G_table: nx.DiGraph = field(init=False)
 
     def __post_init__(self) -> None:
-        self.preprocess()
-        self.parse_clauses()
-        self.parse_basics()
-        self.parse_table_graph()
+        try:
+            self.preprocess()
+            self.parse_clauses()
+            self.parse_basics()
+            self.parse_table_graph()
+        except:
+            raise QueryParsingFailed
 
     def preprocess(self) -> None:
         processed = self.raw
@@ -123,9 +126,7 @@ class QueryParser:
             if len(self.basics) > 0:
                 self.basics[-1].add_clause(clause)
 
-        if not isinstance(self.basics[-1], bs.BasicQuery):
-            raise InvalidStructure
-
+        assert isinstance(self.basics[-1], bs.BasicQuery)
         self.basics[-1].target = self.target
 
     def parse_table_graph(self) -> None:
