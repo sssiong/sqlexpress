@@ -7,6 +7,7 @@ from typing import List
 import yaml
 
 from . import QueryParser
+from ..exceptions import YamlParsingFailed
 
 
 @dataclass
@@ -57,12 +58,15 @@ class YamlParser:
     jobs: List[Job] = field(init=False)
 
     def __post_init__(self) -> None:
-        parsed = yaml.safe_load(open(self.filepath, 'r').read())
-        assert 'parameters' in parsed.keys(), 'Missing parameters'
-        assert 'jobs' in parsed.keys(), 'Missing jobs'
-        self.raw = parsed
-        self.params = Params(**parsed['parameters'])
-        self.jobs = [Job(**j) for j in parsed['jobs']]
+        try:
+            parsed = yaml.safe_load(open(self.filepath, 'r').read())
+            assert 'parameters' in parsed.keys(), 'Missing parameters'
+            assert 'jobs' in parsed.keys(), 'Missing jobs'
+            self.raw = parsed
+            self.params = Params(**parsed['parameters'])
+            self.jobs = [Job(**j) for j in parsed['jobs']]
+        except:
+            raise YamlParsingFailed
 
     def parse_jobs(self) -> None:
         parsed_jobs = []
