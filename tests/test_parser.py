@@ -1,7 +1,7 @@
 import pytest
 
+from sqlexpress.exceptions import QueryParsingFailed
 from sqlexpress.parsers import QueryParser
-from sqlexpress.exceptions import InvalidStructure
 
 from . import TEST_DATA_DIR, TEST_FILES, ANSWERS
 
@@ -29,8 +29,8 @@ def test_query_parser_sources(file: str):
     assert parser.extract_sources() == ANSWERS[file]["sources"]
 
 
-@pytest.mark.parametrize('file', ['invalid1.sql'])
-def test_query_parser_invalid_structure(file: str):
-    with pytest.raises(InvalidStructure):
+@pytest.mark.parametrize('file', ['fail1.sql', 'fail2.sql'])
+def test_query_parser_fail(file: str):
+    with pytest.raises(QueryParsingFailed):
         query = open(TEST_DATA_DIR / file, 'r').read()
         _ = QueryParser(query)
