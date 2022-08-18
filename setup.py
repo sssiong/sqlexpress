@@ -15,10 +15,14 @@ setup(
     url='https://github.com/sssiong/sqlexpress',
     include_package_data=True,
     install_requires=[
-        'Flask==2.1.2',
         'networkx==2.8',
         'PyYAML==6.0',
     ],
+    extras_require={
+        'web': [
+            'Flask==2.1.2',
+        ]
+    },
     tests_require=['pytest'],
     packages=find_packages(exclude=('tests', )),
 )
