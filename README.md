@@ -32,6 +32,12 @@ Given multiple SQL files, this package is further designed to:
 
 ## Getting Started
 
+### Installation
+
+```bash
+pip install sqlexpress
+```
+
 ### Single SQL File
 
 Using command line:
@@ -78,6 +84,12 @@ Extracted details are stored in a json file
 ([example](tests/data/bulk2.json)).
 
 ## Web Server
+
+### Installation
+
+```bash
+pip install sqlexpress[web]
+```
 
 ### Home page
 
