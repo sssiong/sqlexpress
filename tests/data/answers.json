@@ -105,5 +105,18 @@
       "`project.dataset.example2`",
       "`project.dataset.example3`"
     ]
+  },
+  "incomplete1.sql": {
+    "sources": [
+      "`project.dataset.raw1`",
+      "`project.dataset.profile`",
+      "`project.dataset.raw2`"
+    ]
+  },
+  "incomplete2.sql": {
+    "sources": [
+      "`project.dataset.raw2`",
+      "`project.dataset.profile`"
+    ]
   }
 }
