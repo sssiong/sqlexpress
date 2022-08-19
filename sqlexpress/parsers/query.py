@@ -71,7 +71,7 @@ class QueryParser:
 
     def parse_clauses(self) -> None:
         self.clauses: List[cl.Clause] = []
-        tokens: List[str] = self.processed.split(' ')
+        tokens: List[str] = self.processed.split()
         n_tokens: int = len(tokens)
 
         # loop through tokens
@@ -106,13 +106,14 @@ class QueryParser:
                     break
 
             # add current token to most recent clause
-            self.clauses[-1].add_token(token)
+            if self.clauses:
+                self.clauses[-1].add_token(token)
 
     def parse_basics(self) -> None:
         self.basics: List[bs.BasicStructure] = []
 
         # loop through clauses
-        for i, clause in enumerate(self.clauses):
+        for clause in self.clauses:
             is_pending = False if len(self.basics) == 0 \
                 else self.basics[-1].pending_clause()
 
@@ -126,8 +127,8 @@ class QueryParser:
             if len(self.basics) > 0:
                 self.basics[-1].add_clause(clause)
 
-        assert isinstance(self.basics[-1], bs.BasicQuery)
-        self.basics[-1].target = self.target
+        if isinstance(self.basics[-1], bs.BasicQuery):
+            self.basics[-1].target = self.target
 
     def parse_table_graph(self) -> None:
         rships = [r for b in self.basics for r in b.extract_table_to_table()]
